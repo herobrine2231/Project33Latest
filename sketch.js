@@ -14,7 +14,7 @@ var ground;
 
 var particle;
 var gameState="play";
-var count=0;
+var count=1;
 
 function setup() {
  var canvas= createCanvas(800, 800);
@@ -93,37 +93,41 @@ function draw() {
    }
 
    text("Score : "+score,20,30); 
+   text("Count: "+count, 20,60);
+
    if(particle !== null)
   {
     particle.display();
+    console.log(particle.body.position.x);
 
     if (particle.body.position.y <799)
     {
-      if(particle.body.position.x>300)
+      if(particle.body.position.x<300)
       {
         score=score+500;
         console.log(score);
         particle = null;
-       // count++;
-        if(count >= 5 )
-        {
-          gameState ="end";
-        }
+          if(count >= 5 )
+          {
+            gameState ="end";
+          }
         console.log(gameState);
       }
     }
+  }
 
     if (particle!== null)
     {
+      particle.display();
+      console.log(particle.body.position.x);
       if (particle.body.position.y < 799)
       {
-        if(particle.body.position.x>601 && particle.body.position < 799)
+        if(particle.body.position.x>601 && particle.body.position.x < 799)
         {
           score=score+200;
           console.log(score);
           particle = null;
-         // count++;
-          if(count >= 5)
+          if(count >=5 )
           {
             gameState ="end";
           }
@@ -133,6 +137,8 @@ function draw() {
   }
   if(particle!==null)
   {
+    particle.display();
+    console.log(particle.body.position.x);
   if (particle.body.position.y < 799)
     {
       if(particle.body.position.x>301 && particle.body.position.x<600)
@@ -140,7 +146,6 @@ function draw() {
         score=score+100;
         console.log(score);
         particle = null;
-       // count++;
         if(count >= 5)
         {
           gameState ="end";
@@ -151,8 +156,17 @@ function draw() {
   }
 
   text("Score : "+score,20,30); 
+  if(gameState ==="end")
+  {
+    console.log(gameState);
+    count=0;
+    score=0;
+    console.log(count);
+    text("GAME OVER",width/2, height/2);
+   
+  }
 }
-}
+//}
 function mousePressed()
 {
   if (gameState !=="end")
@@ -161,12 +175,5 @@ function mousePressed()
     console.log(count);
     particle=new Particle(mouseX, 10, 10, 10);
   }
-  if(gameState ==="end")
-  {
-    console.log(gameState);
-    count=0;
-    console.log(count);
-    text("GAME OVER",width/2, height/2);
-   
-  }
+  
 }
